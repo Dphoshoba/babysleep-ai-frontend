@@ -21,11 +21,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
+    const fetchSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      const currentSession = data?.session ?? null;
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
       setLoading(false);
-    });
+    };
+
+    fetchSession();
 
     // Listen for auth state changes
     const {
@@ -50,4 +54,5 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
 
