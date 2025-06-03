@@ -24,10 +24,17 @@ export const signUp = async (email: string, password: string): Promise<AuthResul
 };
 
 export const signIn = async (email: string, password: string, rememberMe: boolean = false): Promise<AuthResult> => {
+  // Set session persistence before signing in
+  await supabase.auth.setSession({
+    access_token: '',
+    refresh_token: ''
+  });
+
   const { data, error } = await supabase.auth.signInWithPassword({ 
     email, 
     password
   });
+
   return {
     user: data.user,
     session: data.session,
