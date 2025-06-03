@@ -1,15 +1,25 @@
+// src/lib/supabaseClient.ts
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '../types/supabase';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables. Please check your .env file.');
+// Log warnings for missing environment variables
+if (!supabaseUrl) {
+  console.warn('⚠️ VITE_SUPABASE_URL is not defined. Check your environment variables.');
+}
+if (!supabaseAnonKey) {
+  console.warn('⚠️ VITE_SUPABASE_ANON_KEY is not defined. Check your environment variables.');
 }
 
+// Fallback to placeholder values so the app won't crash
+const fallbackUrl = 'https://placeholder.supabase.co';
+const fallbackKey = 'public-anon-key-placeholder';
+
 export const supabase = createClient<Database>(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key'
+  supabaseUrl || fallbackUrl,
+  supabaseAnonKey || fallbackKey
 );
+
 
