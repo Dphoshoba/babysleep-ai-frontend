@@ -21,11 +21,15 @@ export default function Babies() {
           .select('*')
           .eq('user_id', user.id);
 
-        if (error) throw error;
+        if (error) {
+          console.error('Error fetching babies:', error, data);
+          setError(error.message || 'An error occurred fetching babies');
+          return;
+        }
         setBabies(data || []);
       } catch (err) {
-        console.error('Error fetching babies:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        console.error('Unexpected error fetching babies:', err);
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred');
       } finally {
         setLoading(false);
       }
