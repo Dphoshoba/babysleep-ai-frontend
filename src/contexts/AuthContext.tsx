@@ -24,6 +24,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
     setIsConfigured(!!(supabaseUrl && supabaseAnonKey));
 
+    // Test Supabase connection
+    const testConnection = async () => {
+      try {
+        console.log('🧪 Testing Supabase connection...');
+        const { data, error } = await supabase.from('babies').select('count').limit(1);
+        if (error) {
+          console.error('❌ Supabase connection test failed:', error);
+        } else {
+          console.log('✅ Supabase connection test successful');
+        }
+      } catch (err) {
+        console.error('🔥 Supabase connection test error:', err);
+      }
+    };
+
     // Get initial session
     const fetchSession = async () => {
       try {
@@ -39,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     fetchSession();
+    testConnection(); // Test the connection
 
     // Listen for auth state changes
     const {
