@@ -14,21 +14,25 @@ export default function Babies() {
   useEffect(() => {
     if (!user) return;
 
+    console.log('👤 Logged-in user ID:', user.id); // Debug: show current user's ID
+
     const fetchBabies = async () => {
       try {
         const { data, error } = await supabase
           .from('babies')
           .select('*')
-          .eq('parent_id', user.id);
+          .eq('user_id', user.id);
 
         if (error) {
-          console.error('Error fetching babies:', error, data);
+          console.error('❌ Error fetching babies:', error);
           setError(error.message || 'An error occurred fetching babies');
           return;
         }
+
+        console.log('👶 Fetched babies:', data); // Debug: show babies retrieved
         setBabies(data || []);
       } catch (err) {
-        console.error('Unexpected error fetching babies:', err);
+        console.error('🔥 Unexpected error fetching babies:', err);
         setError(err instanceof Error ? err.message : 'An unexpected error occurred');
       } finally {
         setLoading(false);
@@ -75,5 +79,6 @@ export default function Babies() {
     </div>
   );
 }
+
 
 
