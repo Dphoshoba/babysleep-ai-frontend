@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -9,7 +9,6 @@ import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import { useAuth } from './contexts/AuthContext';
 import { Component, ErrorInfo, ReactNode } from 'react';
-import Layout from './components/Layout';
 
 console.log("✅ App.tsx is rendering");
 
@@ -54,6 +53,20 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return user ? <>{children}</> : <Navigate to="/login" />;
 }
 
+// Simple inline layout for debugging
+function DebugLayout() {
+  return (
+    <div>
+      <nav style={{ background: 'purple', color: 'white', padding: 20 }}>
+        DEBUG NAVIGATION BAR
+      </nav>
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -67,12 +80,12 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
 
-          {/* Protected routes inside Layout */}
+          {/* Protected routes inside DebugLayout */}
           <Route
             path="/"
             element={
               <ProtectedRoute>
-                <Layout />
+                <DebugLayout />
               </ProtectedRoute>
             }
           >
