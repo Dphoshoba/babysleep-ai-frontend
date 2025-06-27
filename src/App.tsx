@@ -9,6 +9,7 @@ import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import { useAuth } from './contexts/AuthContext';
 import { Component, ErrorInfo, ReactNode } from 'react';
+import Layout from './components/Layout';
 
 console.log("✅ App.tsx is rendering");
 
@@ -58,27 +59,32 @@ export default function App() {
     <ErrorBoundary>
       <AuthProvider>
         <Routes>
+          {/* Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
+
+          {/* Protected routes inside Layout */}
           <Route
-            path="/babies"
+            path="/"
             element={
               <ProtectedRoute>
-                <Babies />
+                <Layout />
               </ProtectedRoute>
             }
-          />
-          <Route path="/" element={<Navigate to="/babies" />} />
+          >
+            <Route index element={<Navigate to="babies" />} />
+            <Route path="babies" element={<Babies />} />
+            {/* Add more protected routes here */}
+          </Route>
         </Routes>
       </AuthProvider>
     </ErrorBoundary>
   );
 }
-
 
 
 
