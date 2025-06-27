@@ -7,6 +7,7 @@ import ResetPassword from './pages/ResetPassword';
 import Babies from './pages/Babies';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import Dashboard from './pages/Dashboard';
 import { useAuth } from './contexts/AuthContext';
 import { Component, ErrorInfo, ReactNode } from 'react';
 import Layout from './components/Layout';
@@ -78,6 +79,7 @@ export default function App() {
           >
             <Route index element={<Navigate to="babies" />} />
             <Route path="babies" element={<Babies />} />
+            <Route path="dashboard" element={<Dashboard />} />
             {/* Add more protected routes here */}
           </Route>
         </Routes>
