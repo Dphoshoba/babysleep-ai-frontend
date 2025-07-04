@@ -17,21 +17,21 @@ const sounds: Sound[] = [
     id: 'white-noise',
     name: 'White Noise',
     icon: <Waves className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/misc/sounds/white-noise-1.mp3',
+    url: '/sounds/white-noise-1.mp3',
     category: 'white-noise'
   },
   {
     id: 'pink-noise',
     name: 'Pink Noise',
     icon: <Waves className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/misc/sounds/pink-noise-1.mp3',
+    url: '/sounds/pink.noise.mp3',
     category: 'white-noise'
   },
   {
     id: 'brown-noise',
     name: 'Brown Noise',
     icon: <Waves className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/misc/sounds/brown-noise-1.mp3',
+    url: '/sounds/brown.noise.mp3',
     category: 'white-noise'
   },
   
@@ -40,21 +40,21 @@ const sounds: Sound[] = [
     id: 'rain',
     name: 'Rain Sounds',
     icon: <Wind className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/nature/sounds/rain-1.mp3',
+    url: '/sounds/rain.sounds.mp3',
     category: 'nature'
   },
   {
     id: 'ocean-waves',
     name: 'Ocean Waves',
     icon: <Waves className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/nature/sounds/ocean-wave-1.mp3',
+    url: '/sounds/ocean.waves.wav',
     category: 'nature'
   },
   {
     id: 'forest',
     name: 'Forest Ambience',
     icon: <Wind className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/nature/sounds/forest-1.mp3',
+    url: '/sounds/forest.ambience.wav',
     category: 'nature'
   },
   
@@ -63,7 +63,7 @@ const sounds: Sound[] = [
     id: 'heartbeat',
     name: 'Heartbeat',
     icon: <Heart className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/misc/sounds/heartbeat-1.mp3',
+    url: '/sounds/heartbeat.mp3',
     category: 'heartbeat'
   },
   
@@ -72,7 +72,7 @@ const sounds: Sound[] = [
     id: 'twinkle-twinkle',
     name: 'Twinkle Twinkle',
     icon: <Music className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/misc/sounds/twinkle-twinkle-1.mp3',
+    url: '/sounds/twinkle.twinkle.mp3',
     category: 'lullabies',
     duration: 180
   },
@@ -80,7 +80,7 @@ const sounds: Sound[] = [
     id: 'brahms-lullaby',
     name: 'Brahms Lullaby',
     icon: <Music className="w-6 h-6" />,
-    url: 'https://www.soundjay.com/misc/sounds/brahms-lullaby-1.mp3',
+    url: '/sounds/brahms.lullaby.mp3',
     category: 'lullabies',
     duration: 240
   }
@@ -348,4 +348,4 @@ export default function SleepSounds({ babyId }: SleepSoundsProps) {
       </div>
     </div>
   );
-} 
+}
