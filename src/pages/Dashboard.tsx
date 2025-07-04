@@ -24,6 +24,7 @@ import {
   Shield,
   Globe
 } from 'lucide-react';
+import { Bars3Icon, XMarkIcon, MoonIcon, SunIcon, UserCircleIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline';
 
 interface Baby {
   id: string;
@@ -231,6 +232,63 @@ export default function Dashboard() {
     }
   ];
 
+  // Add all features to Quick Actions, including Premium and Referrals
+  const allFeatureCards = [
+    ...featureCards,
+    ...premiumFeatures.map(card => ({
+      ...card,
+      premium: true // Mark as premium for consistency
+    })),
+    {
+      title: 'Baby Profile',
+      description: 'View and edit baby profiles',
+      icon: <UserCircleIcon className="w-8 h-8" />,
+      color: 'bg-gray-500',
+      link: '/profile',
+      premium: false
+    },
+    {
+      title: 'Analytics',
+      description: 'General analytics and insights',
+      icon: <ChartBar className="w-8 h-8" />,
+      color: 'bg-blue-800',
+      link: '/analytics',
+      premium: false
+    },
+    {
+      title: 'Schedules',
+      description: 'Manage sleep schedules',
+      icon: <Clock className="w-8 h-8" />,
+      color: 'bg-indigo-800',
+      link: '/schedules',
+      premium: false
+    },
+    {
+      title: 'Settings',
+      description: 'App and account settings',
+      icon: <Shield className="w-8 h-8" />,
+      color: 'bg-gray-800',
+      link: '/settings',
+      premium: false
+    },
+    {
+      title: 'Terms',
+      description: 'Terms of service',
+      icon: <BookOpen className="w-8 h-8" />,
+      color: 'bg-gray-300',
+      link: '/terms',
+      premium: false
+    },
+    {
+      title: 'Privacy',
+      description: 'Privacy policy',
+      icon: <Shield className="w-8 h-8" />,
+      color: 'bg-gray-400',
+      link: '/privacy',
+      premium: false
+    }
+  ];
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
@@ -367,7 +425,7 @@ export default function Dashboard() {
       >
         <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featureCards.map((card, index) => (
+          {allFeatureCards.map((card, index) => (
             <Link
               key={card.title}
               to={card.link}

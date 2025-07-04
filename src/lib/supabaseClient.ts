@@ -1,4 +1,5 @@
 // src/lib/supabaseClient.ts
+console.log('ENV:', import.meta.env);
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '../types/supabase';
 
@@ -23,7 +24,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // ✅ Create typed Supabase client
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
-// Test the connection
+
 console.log('🔌 Supabase client created, testing connection...');
 
 
