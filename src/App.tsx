@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Component, ErrorInfo, ReactNode } from 'react';
 
@@ -139,11 +139,22 @@ export default function App() {
             <Route path="premium" element={<PremiumSubscription />} />
             <Route path="referrals" element={<ReferralRewards />} />
             <Route path="parent-info" element={<ParentInformation />} />
+            
+            {/* Baby Tracker by ID */}
+            <Route path="tracker/:babyId" element={<BabyTrackerWrapper />} />
+            <Route path="profile/:babyId" element={<BabyProfile />} />
           </Route>
         </Routes>
       </AuthProvider>
     </ErrorBoundary>
   );
+}
+
+// Add this wrapper at the bottom of the file:
+function BabyTrackerWrapper() {
+  const { babyId } = useParams();
+  if (!babyId) return <div>Baby not found.</div>;
+  return <BabyTracker babyId={babyId} />;
 }
 
 

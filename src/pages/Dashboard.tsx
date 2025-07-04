@@ -379,6 +379,37 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
+      {/* Babies List - Make names clickable */}
+      {babies.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="bg-white rounded-xl shadow-lg p-6"
+        >
+          <h2 className="text-2xl font-bold mb-4">Your Babies</h2>
+          <ul className="space-y-2">
+            {babies.map((baby) => (
+              <li key={baby.id}>
+                <Link
+                  to={`/tracker/${baby.id}`}
+                  className="text-indigo-600 hover:underline font-semibold text-lg mr-2"
+                >
+                  {baby.name}
+                </Link>
+                <Link
+                  to={`/profile/${baby.id}`}
+                  className="text-gray-500 hover:underline text-sm"
+                >
+                  (Profile)
+                </Link>
+                <span className="ml-2 text-gray-400 text-xs">Born: {new Date(baby.birth_date).toLocaleDateString()}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
+
       {/* Premium Features Highlight */}
       {currentPlan === 'free' && (
         <motion.div
