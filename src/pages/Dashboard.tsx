@@ -299,6 +299,13 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
+      {/* Logos at the top */}
+      <div className="flex items-center gap-8 py-6 px-2">
+        <img src="/logo.png.png" alt="Baby Sleep Logo" className="h-24 w-auto drop-shadow-2xl animate-fade-in" />
+        <img src="/baby.jpg.png" alt="Agency Logo" className="h-20 w-auto rounded-full border-4 border-indigo-300 shadow-xl animate-fade-in" />
+        <span className="ml-6 text-4xl font-extrabold text-indigo-700 tracking-tight drop-shadow-lg">BabySleep AI</span>
+      </div>
+
       {/* Welcome Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -460,22 +467,19 @@ export default function Dashboard() {
             <Link
               key={card.title}
               to={card.link}
-              className={`group relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 ${
-                card.premium && currentPlan === 'free' ? 'opacity-60' : ''
-              }`}
+              className={`group relative bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 border-2 border-transparent hover:border-indigo-200 focus:ring-4 focus:ring-indigo-100 focus:outline-none ${card.premium && currentPlan === 'free' ? 'opacity-60' : ''}`}
+              style={{ boxShadow: '0 4px 24px 0 rgba(80, 72, 229, 0.08)' }}
             >
               {card.premium && currentPlan === 'free' && (
                 <div className="absolute top-2 right-2">
-                  <Crown className="w-5 h-5 text-yellow-500" />
+                  <Crown className="w-5 h-5 text-yellow-500 animate-bounce" />
                 </div>
               )}
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg ${card.color} text-white mb-4`}>
-                {card.icon}
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{card.title}</h3>
-              <p className="text-sm text-gray-600">{card.description}</p>
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg ${card.color} text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-200`}>{card.icon}</div>
+              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors duration-200">{card.title}</h3>
+              <p className="text-sm text-gray-600 group-hover:text-indigo-500 transition-colors duration-200">{card.description}</p>
               {card.premium && currentPlan === 'free' && (
-                <div className="mt-3 text-xs text-yellow-600 font-medium">Premium Feature</div>
+                <div className="mt-3 text-xs text-yellow-600 font-medium animate-pulse">Premium Feature</div>
               )}
             </Link>
           ))}
@@ -581,6 +585,61 @@ export default function Dashboard() {
             Get Personalized Advice
           </Link>
         </div>
+      </motion.div>
+
+      {/* App Manual / Help Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="bg-white rounded-2xl shadow-xl p-8 border border-indigo-100 mt-2"
+      >
+        <h2 className="text-2xl font-bold text-indigo-700 mb-4">📝 How to Use BabySleep AI</h2>
+        <ol className="list-decimal list-inside text-lg text-gray-700 space-y-2 mb-4">
+          <li>
+            <b>Navigation:</b> Use the sidebar to access all features: Dashboard, Babies, Sleep Logs, Sleep Monitor, Sleep Sounds, Cry Analyzer, AI Consultant, Baby Tracker, Growth Tracker, Sleep Analytics, Parent Info, Premium, and Referrals.
+          </li>
+          <li>
+            <b>Dashboard:</b> View a summary of your babies, sleep logs, and quick access to all features. Click a baby’s name to view their tracker or profile.
+          </li>
+          <li>
+            <b>Babies:</b> Add, view, and manage your babies. Each baby can have a profile and activity logs.
+          </li>
+          <li>
+            <b>Sleep Logs:</b> Log new sleep sessions for your babies, view, edit, or delete past logs. Select a baby, enter sleep/wake times, and rate sleep quality.
+          </li>
+          <li>
+            <b>Sleep Monitor:</b> (Premium) Real-time AI monitoring with safety alerts for your baby’s sleep environment.
+          </li>
+          <li>
+            <b>Sleep Sounds:</b> Play soothing sounds and lullabies for your baby. Click a sound card, then the play button. Adjust volume and timer as needed.
+          </li>
+          <li>
+            <b>Cry Analyzer:</b> (Premium) Use AI to interpret your baby’s cries and get suggestions.
+          </li>
+          <li>
+            <b>AI Consultant:</b> (Premium) Chat with an AI sleep expert for personalized guidance.
+          </li>
+          <li>
+            <b>Baby Tracker:</b> Track feedings, diapers, sleep, and milestones for each baby.
+          </li>
+          <li>
+            <b>Growth Tracker:</b> Monitor your baby’s growth and development milestones.
+          </li>
+          <li>
+            <b>Sleep Analytics:</b> (Premium) View advanced sleep pattern analysis and insights.
+          </li>
+          <li>
+            <b>Parent Info:</b> Access expert articles and resources for better sleep routines.
+          </li>
+          <li>
+            <b>Premium & Referrals:</b> Upgrade for advanced features or refer friends to earn rewards.
+          </li>
+          <li>
+            <b>Settings, Terms, Privacy:</b> Manage your account, view terms of service, and privacy policy.
+          </li>
+        </ol>
+        <div className="text-indigo-600 font-semibold">Need help? Contact support or check the FAQ in the app menu.</div>
       </motion.div>
     </div>
   );

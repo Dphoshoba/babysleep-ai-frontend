@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-br from-indigo-50 via-white to-pink-50 min-h-screen font-sans text-gray-800;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -33,10 +41,45 @@
   }
 }
 
-.card {
-  padding: 2em;
+.card, .bg-white, .rounded-xl, .rounded-lg {
+  @apply shadow-xl rounded-2xl bg-white/90 backdrop-blur-md border border-gray-100;
 }
 
 .read-the-docs {
   color: #888;
 }
+
+/* Sidebar */
+.sidebar {
+  @apply bg-gradient-to-b from-indigo-700 to-indigo-900 text-white shadow-2xl;
+}
+
+/* Buttons */
+button, .btn, .bg-indigo-600 {
+  @apply transition-all duration-200 shadow-md hover:scale-105 hover:shadow-xl;
+}
+
+button:active, .btn:active {
+  @apply scale-95;
+}
+
+/* Headings */
+h1, .text-3xl, .text-2xl {
+  @apply font-extrabold tracking-tight text-indigo-800 drop-shadow-md;
+}
+
+h2, .text-xl {
+  @apply font-bold text-indigo-700;
+}
+
+/* Inputs */
+input, select {
+  @apply rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+}
+
+/* Feature icons */
+.feature-icon {
+  @apply bg-gradient-to-br from-indigo-400 to-pink-400 text-white p-3 rounded-full shadow-lg;
+}
+
+/* Add more as needed for cards, quick actions, etc. */

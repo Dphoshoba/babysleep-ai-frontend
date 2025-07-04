@@ -241,22 +241,30 @@ export default function SleepSounds({ babyId }: SleepSoundsProps) {
                 stopSound();
               }
             }}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
+            onPlay={() => {
+              setIsPlaying(true);
+              console.log('AUDIO PLAYED:', currentSound.url);
+            }}
+            onPause={() => {
+              setIsPlaying(false);
+              console.log('AUDIO PAUSED:', currentSound.url);
+            }}
+            onError={e => {
+              console.error('AUDIO ERROR:', e, currentSound.url);
+            }}
           />
 
           <div className="flex items-center gap-4 mb-4">
             <button
               onClick={() => {
                 if (audioRef.current) {
-                  if (isPlaying) {
-                    audioRef.current.pause();
-                  } else {
-                    audioRef.current.play();
-                  }
+                  audioRef.current.play().catch((err) => {
+                    console.error('Play failed:', err);
+                  });
                 }
               }}
-              className="bg-indigo-600 text-white p-3 rounded-full hover:bg-indigo-700 transition-colors"
+              className={`bg-indigo-600 text-white p-3 rounded-full hover:bg-indigo-700 transition-colors ${!currentSound ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={!currentSound}
             >
               {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
             </button>
