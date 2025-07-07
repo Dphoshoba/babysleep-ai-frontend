@@ -25,7 +25,8 @@ import {
   Globe
 } from 'lucide-react';
 import { Bars3Icon, XMarkIcon, MoonIcon, SunIcon, UserCircleIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline';
-import notificationSound from '../assets/alert.mp3'; // Place a gentle alert sound in src/assets/alert.mp3
+import notificationSound from '../assets/alert.mp3'; // Place a gentle alert sound in src/assets/alert.mp3 - PLACEHOLDER
+// The alert.mp3 file is currently a placeholder. Please replace it with an actual audio file.
 
 interface Baby {
   id: string;
@@ -180,7 +181,7 @@ export default function Dashboard() {
     if (!error && data) {
       if (data.id !== lastWakeId && new Date(data.wake_time) > new Date(Date.now() - 5 * 60 * 1000)) {
         setAlert({
-          babyName: data.babies?.name || 'Your baby',
+          babyName: data.babies?.[0]?.name || 'Your baby',
           wakeTime: new Date(data.wake_time).toLocaleTimeString()
         });
         setLastWakeId(data.id);
@@ -191,8 +192,8 @@ export default function Dashboard() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            userId: user.id,
-            babyName: data.babies?.name || 'Your baby',
+            userId: user?.id,
+            babyName: data.babies?.[0]?.name || 'Your baby',
             wakeTime: data.wake_time
           })
         });
