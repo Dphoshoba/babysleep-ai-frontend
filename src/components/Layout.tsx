@@ -36,6 +36,7 @@ export default function Layout() {
     { to: '/settings', label: 'Settings', icon: '⚙️' },
     { to: '/terms', label: 'Terms', icon: '📃' },
     { to: '/privacy', label: 'Privacy', icon: '🔐' },
+    { to: '/instructions', label: 'Instructions', icon: '📚' },
   ];
 
   return (
