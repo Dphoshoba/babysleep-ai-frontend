@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signUp } from '../lib/auth';
-
+import { handleReferralSignup } from '../lib/referrals';
+import { checkAndUnlockRewards } from '../lib/referrals';
+import { useEffect } from 'react';
 export default function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -70,15 +72,33 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const { error } = await signUp(email, password);
-      
+      const { user, session, error } = await signUp(email, password);
+      const data = {user, session, error};
       if (error) throw error;
       
       // Show success message and redirect to login
       navigate('/login', { 
         state: { 
-          message: 'Please check your email to verify your account before signing in.' 
-        } 
+          message: 'Please check your email to verify your account before signing in.'
+        }
+      });
+
+      // Handle referral signup
+      const urlParams = new URLSearchParams(window.location.search);
+      const referrerCode = urlParams.get('referrer');
+      if (referrerCode && data && data.user && data.user.id) {
+        await handleReferralSignup(referrerCode, data.user.id);
+      }
+
+      // Check rewards for the new user
+      if (data?.user?.id) {
+        await checkAndUnlockRewards(data.user.id);
+      }
+      // Show success message and redirect to login
+      navigate('/login', {
+        state: {
+          message: 'Please check your email to verify your account before signing in.'
+        }
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign up');
