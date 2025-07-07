@@ -23,8 +23,8 @@ import SleepMonitor from './components/SleepMonitor';
 import AIChatbot from './components/AIChatbot';
 import SleepAnalytics from './components/SleepAnalytics';
 import PremiumSubscription from './components/PremiumSubscription';
-import ReferralRewards from './components/ReferralRewards';
-import ParentInformation from './components/ParentInformation';
+import ReferralRewards from './pages/ReferralRewards';
+import ParentInformation from './pages/ParentInformation';
 
 import Layout from './components/Layout';
 
