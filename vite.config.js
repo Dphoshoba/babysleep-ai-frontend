@@ -14,6 +14,7 @@ export default defineConfig({
                 manualChunks: {
                     vendor: ['react', 'react-dom', 'react-router-dom'],
                 },
+                external: ['../assets/alert.mp3'],
             },
         },
     }
