@@ -5,6 +5,7 @@ const Instructions = () => {
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">How to Use BabySleep AI</h1>
         <p className="mb-4">BabySleep AI is your all-in-one solution for understanding and improving your baby's sleep. Our AI-powered tools provide real-time monitoring, expert guidance, and personalized insights to help your little one (and you!) get the rest you deserve.</p>
+        
         <h2 className="text-2xl font-bold mb-2">Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>

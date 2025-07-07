@@ -66,9 +66,9 @@ const Terms = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <button onClick={() => window.history.back()} className="text-indigo-600 hover:text-indigo-500">
-            ← Go Back
-          </button>
+          <Link to="/dashboard" className="text-indigo-600 hover:text-indigo-500">
+            ← Go Back to Dashboard
+          </Link>
         </div>
       </div>
     </div>
