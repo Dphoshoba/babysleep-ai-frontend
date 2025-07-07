@@ -25,6 +25,7 @@ import {
   Globe
 } from 'lucide-react';
 import { Bars3Icon, XMarkIcon, MoonIcon, SunIcon, UserCircleIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline';
+import notificationSound from '../assets/alert.mp3'; // Place a gentle alert sound in src/assets/alert.mp3
 
 interface Baby {
   id: string;
@@ -64,6 +65,9 @@ export default function Dashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [currentPlan, setCurrentPlan] = useState<'free' | 'premium'>('free');
+  const [alert, setAlert] = useState<{ babyName: string; wakeTime: string } | null>(null);
+  const [lastWakeId, setLastWakeId] = useState<string | null>(null);
+  const [playSound, setPlaySound] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -71,6 +75,24 @@ export default function Dashboard() {
       checkSubscriptionStatus();
     }
   }, [user]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (user) {
+      // Initial load
+      checkForWakeAlert();
+      // Poll every 30 seconds
+      interval = setInterval(checkForWakeAlert, 30000);
+    }
+    return () => clearInterval(interval);
+  }, [user]);
+
+  // Request browser notification permission on mount
+  useEffect(() => {
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
+  }, []);
 
   const loadDashboardData = async () => {
     try {
@@ -145,6 +167,57 @@ export default function Dashboard() {
       console.error('Error checking subscription:', error);
     }
   };
+
+  const checkForWakeAlert = async () => {
+    // Get the most recent sleep log (wake event)
+    const { data, error } = await supabase
+      .from('sleep_logs')
+      .select('id, wake_time, baby_id, babies(name)')
+      .eq('user_id', user?.id)
+      .order('wake_time', { ascending: false })
+      .limit(1)
+      .single();
+    if (!error && data) {
+      if (data.id !== lastWakeId && new Date(data.wake_time) > new Date(Date.now() - 5 * 60 * 1000)) {
+        setAlert({
+          babyName: data.babies?.name || 'Your baby',
+          wakeTime: new Date(data.wake_time).toLocaleTimeString()
+        });
+        setLastWakeId(data.id);
+        setPlaySound(true);
+
+        // Call Supabase Edge Function for email/SMS alert
+        fetch('https://<your-project>.functions.supabase.co/send_wake_alert', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.id,
+            babyName: data.babies?.name || 'Your baby',
+            wakeTime: data.wake_time
+          })
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (playSound) {
+      const audio = new Audio(notificationSound);
+      audio.volume = 0.5;
+      audio.play();
+      setPlaySound(false);
+    }
+  }, [playSound]);
+
+  // Show browser notification when a wake event is detected
+  useEffect(() => {
+    if (playSound && alert && "Notification" in window && Notification.permission === "granted") {
+      new Notification(`${alert.babyName} just woke up!`, {
+        body: `Wake time: ${alert.wakeTime}`,
+        icon: "/logo.png.png"
+      });
+    }
+  }, [playSound, alert]);
 
   const featureCards = [
     {
@@ -299,6 +372,28 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
+      {/* Real-time Wake Alert */}
+      {alert && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-between bg-yellow-100 border-l-4 border-yellow-500 rounded-xl p-4 shadow-lg mb-2 animate-pulse"
+        >
+          <div className="flex items-center gap-3">
+            <Bell className="w-7 h-7 text-yellow-600 animate-bounce" />
+            <span className="text-lg font-semibold text-yellow-800">
+              {alert.babyName} just woke up at {alert.wakeTime}!
+            </span>
+          </div>
+          <button
+            onClick={() => setAlert(null)}
+            className="ml-4 px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors font-medium"
+          >
+            Dismiss
+          </button>
+        </motion.div>
+      )}
+
       {/* Logos at the top */}
       <div className="flex items-center gap-8 py-6 px-2">
         <img src="/logo.png.png" alt="Baby Sleep Logo" className="h-24 w-auto drop-shadow-2xl animate-fade-in" />
@@ -641,6 +736,18 @@ export default function Dashboard() {
         </ol>
         <div className="text-indigo-600 font-semibold">Need help? Contact support or check the FAQ in the app menu.</div>
       </motion.div>
+
+      {/* Enable Notifications Button - Shown if permission is not granted */}
+      {Notification && Notification.permission !== "granted" && (
+        <div className="mt-4">
+          <button
+            onClick={() => Notification.requestPermission()}
+            className="ml-4 px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors font-medium"
+          >
+            Enable Notifications
+          </button>
+        </div>
+      )}
     </div>
   );
 }
