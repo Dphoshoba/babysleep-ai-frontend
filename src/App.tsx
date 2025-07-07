@@ -9,6 +9,7 @@ import ResetPassword from './pages/ResetPassword';
 import Babies from './pages/Babies';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import Instructions from './pages/Instructions';
 import Dashboard from './pages/Dashboard';
 import SleepLogs from './pages/SleepLogs';
 import BabyProfile from './pages/BabyProfile';
@@ -139,7 +140,8 @@ export default function App() {
             <Route path="premium" element={<PremiumSubscription />} />
             <Route path="referrals" element={<ReferralRewards />} />
             <Route path="parent-info" element={<ParentInformation />} />
-            
+            <Route path="instructions" element={<Instructions />} />
+
             {/* Baby Tracker by ID */}
             <Route path="tracker/:babyId" element={<BabyTrackerWrapper />} />
             <Route path="profile/:babyId" element={<BabyProfile />} />
