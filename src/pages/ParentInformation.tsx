@@ -51,7 +51,6 @@ const ParentInformation = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-2">📚 Parent Info Hub</h2>
         <p className="mb-2">Expert-vetted tips, guides, and sleep science articles.</p>
-        <p className="mb-4"><strong>How to use:</strong> Browse and search based on age or concern.</p>
       </section>
     </div>
   );
